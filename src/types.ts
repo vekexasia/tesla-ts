@@ -83,7 +83,7 @@ export type DriveState =  {
   native_longitude: number,
   native_type: "wgs",
   power: null,
-  shift_state: null,
+  shift_state: null|'D'|'P'|'R',
   speed: null,
   timestamp: number
 }
