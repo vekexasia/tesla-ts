@@ -7,7 +7,7 @@
   "author": "Andrea Baccega",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --outDir dist --target es5 -d"
+    "build": "tslint -p . && tsc --outDir dist --target es5 -d"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

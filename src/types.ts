@@ -1,115 +1,122 @@
-export type ChargeState = {
-  battery_heater_on: boolean,
-  battery_level: number,
-  battery_range: number,
-  charge_current_request: number,
-  charge_current_request_max: number,
-  charge_enable_request: true,
-  charge_energy_added: number,
-  charge_limit_soc: number,
-  charge_limit_soc_max: number,
-  charge_limit_soc_min: number,
-  charge_limit_soc_std: number,
-  charge_miles_added_ideal: number,
-  charge_miles_added_rated: number,
-  charge_port_cold_weather_mode: null,
-  charge_port_door_open: boolean,
-  charge_port_latch: string, // Engaged?
-  charge_rate: number,
-  charge_to_max_range: boolean,
-  charger_actual_current: number,
-  charger_phases: number,
-  charger_pilot_current: number,
-  charger_power: number,
-  charger_voltage: number,
-  charging_state: string, // Disconnected
-  conn_charge_cable: null,
-  est_battery_range: number,
+// tslint:disable-next-line:interface-name
+export interface ChargeState {
+  battery_heater_on: boolean;
+  battery_level: number;
+  battery_range: number;
+  charge_current_request: number;
+  charge_current_request_max: number;
+  charge_enable_request: true;
+  charge_energy_added: number;
+  charge_limit_soc: number;
+  charge_limit_soc_max: number;
+  charge_limit_soc_min: number;
+  charge_limit_soc_std: number;
+  charge_miles_added_ideal: number;
+  charge_miles_added_rated: number;
+  charge_port_cold_weather_mode: null;
+  charge_port_door_open: boolean;
+  charge_port_latch: string; // Engaged?
+  charge_rate: number;
+  charge_to_max_range: boolean;
+  charger_actual_current: number;
+  charger_phases: number;
+  charger_pilot_current: number;
+  charger_power: number;
+  charger_voltage: number;
+  charging_state: string; // Disconnected
+  conn_charge_cable: null;
+  est_battery_range: number;
   // fast_charger_brand: <invalid>,
   // fast_charger_present: boolean,
   // fast_charger_type: <invalid>,
-  ideal_battery_range: number,
-  managed_charging_active: boolean,
-  managed_charging_start_time: null,
-  managed_charging_user_canceled: boolean,
-  max_range_charge_counter: number,
-  not_enough_power_to_heat: boolean,
-  scheduled_charging_pending: boolean,
-  scheduled_charging_start_time: null,
-  time_to_full_charge: number,
-  timestamp: number,
-  trip_charging: boolean,
-  usable_battery_level: number,
-  user_charge_enable_request: null
+  ideal_battery_range: number;
+  managed_charging_active: boolean;
+  managed_charging_start_time: null;
+  managed_charging_user_canceled: boolean;
+  max_range_charge_counter: number;
+  not_enough_power_to_heat: boolean;
+  scheduled_charging_pending: boolean;
+  scheduled_charging_start_time: null;
+  time_to_full_charge: number;
+  timestamp: number;
+  trip_charging: boolean;
+  usable_battery_level: number;
+  user_charge_enable_request: null;
 }
-export type ClimateState = {
-  battery_heater: boolean,
-  battery_heater_no_power: boolean,
-  climate_keeper_mode: 'on'|'off',
-  driver_temp_setting: number,
-  fan_status: number,
-  inside_temp: number,
-  is_auto_conditioning_on: boolean,
-  is_climate_on: boolean,
-  is_front_defroster_on: boolean,
-  is_preconditioning: boolean,
-  is_rear_defroster_on: boolean,
-  left_temp_direction: number,
-  max_avail_temp: 28.0,
-  min_avail_temp: 15.0,
-  outside_temp: number,
-  passenger_temp_setting: number,
-  remote_heater_control_enabled:boolean,
-  right_temp_direction: number,
-  seat_heater_left: 0|1|2|3,
-  seat_heater_rear_left: 0|1|2|3,
-  seat_heater_rear_right: 0|1|2|3,
-  seat_heater_right: 0|1|2|3,
-  seat_heater_third_row_left: 0|1|2|3,
-  seat_heater_third_row_right: 0|1|2|3,
-  side_mirror_heaters: boolean,
-  smart_preconditioning: boolean,
-  steering_wheel_heater: boolean,
-  timestamp: number,
-  wiper_blade_heater: boolean
-}
-export type DriveState =  {
-  gps_as_of: number,
-  heading: number,
-  latitude: number,
-  longitude: number,
-  native_latitude: number,
-  native_location_supported: 1|0,
-  native_longitude: number,
-  native_type: "wgs",
-  power: null,
-  shift_state: null|'D'|'P'|'R',
-  speed: null,
-  timestamp: number
-}
-export type GUISettings = {
-  gui_24_hour_time: boolean,
-  gui_charge_rate_units: "mi/hr"|"km/hr",
-  gui_distance_units: "mi/hr"|"km/hr",
-  gui_range_display: "Rated",
-  gui_temperature_units: "F"|"C",
-  timestamp: number
+// tslint:disable-next-line:interface-name
+export interface ClimateState {
+  battery_heater: boolean;
+  battery_heater_no_power: boolean;
+  climate_keeper_mode: "on"|"off";
+  driver_temp_setting: number;
+  fan_status: number;
+  inside_temp: number;
+  is_auto_conditioning_on: boolean;
+  is_climate_on: boolean;
+  is_front_defroster_on: boolean;
+  is_preconditioning: boolean;
+  is_rear_defroster_on: boolean;
+  left_temp_direction: number;
+  max_avail_temp: 28.0;
+  min_avail_temp: 15.0;
+  outside_temp: number;
+  passenger_temp_setting: number;
+  remote_heater_control_enabled: boolean;
+  right_temp_direction: number;
+  seat_heater_left: 0|1|2|3;
+  seat_heater_rear_left: 0|1|2|3;
+  seat_heater_rear_right: 0|1|2|3;
+  seat_heater_right: 0|1|2|3;
+  seat_heater_third_row_left: 0|1|2|3;
+  seat_heater_third_row_right: 0|1|2|3;
+  side_mirror_heaters: boolean;
+  smart_preconditioning: boolean;
+  steering_wheel_heater: boolean;
+  timestamp: number;
+  wiper_blade_heater: boolean;
 }
 
-export type BaseVehicle = {
-  id: number
-  vehicle_id: number
-  vin: string
-  display_name: string
-  option_codes: string
-  color: string
-  tokens: string[]
-  state: 'online'|'offline'
-  in_service: boolean
-  id_s: string
-  calendar_enabled: boolean
-  backseat_token: null
-  backseat_token_updated_at: null
+// tslint:disable-next-line:interface-name
+export interface DriveState {
+  gps_as_of: number;
+  heading: number;
+  latitude: number;
+  longitude: number;
+  native_latitude: number;
+  native_location_supported: 1|0;
+  native_longitude: number;
+  native_type: "wgs";
+  power: null;
+  shift_state: null|"D"|"P"|"R";
+  speed: null;
+  timestamp: number;
+}
+
+// tslint:disable-next-line:interface-name
+export interface GUISettings {
+  gui_24_hour_time: boolean;
+  gui_charge_rate_units: "mi/hr"|"km/hr";
+  gui_distance_units: "mi/hr"|"km/hr";
+  gui_range_display: "Rated";
+  gui_temperature_units: "F"|"C";
+  timestamp: number;
+}
+
+// tslint:disable-next-line:interface-name
+export interface BaseVehicle {
+  id: number;
+  vehicle_id: number;
+  vin: string;
+  display_name: string;
+  option_codes: string;
+  color: string;
+  tokens: string[];
+  state: "online"|"offline";
+  in_service: boolean;
+  id_s: string;
+  calendar_enabled: boolean;
+  backseat_token: null;
+  backseat_token_updated_at: null;
 
 }
 export type VehicleData = BaseVehicle & {
@@ -142,7 +149,7 @@ export type VehicleData = BaseVehicle & {
     "third_row_seats": string,
     "timestamp": number,
     "trim_badging": string,
-    "wheel_type": string
+    "wheel_type": string,
   },
   "vehicle_state": {
     "api_version": 6,
@@ -159,7 +166,7 @@ export type VehicleData = BaseVehicle & {
     "last_autopark_error": "no_error",
     "locked": true,
     "media_state": {
-      "remote_control_enabled": true
+      "remote_control_enabled": true,
     },
     "notifications_supported": true,
     "odometer": number,
@@ -173,36 +180,37 @@ export type VehicleData = BaseVehicle & {
     "sentry_mode": boolean,
     "software_update": {
       "expected_duration_sec": number,
-      "status": string
+      "status": string,
     },
     "speed_limit_mode": {
       "active": boolean,
       "current_limit_mph": number,
       "max_limit_mph": number,
       "min_limit_mph": number,
-      "pin_code_set": boolean
+      "pin_code_set": boolean,
     },
     "sun_roof_percent_open": null,
     "sun_roof_state": "unknown",
     "timestamp": number,
     "valet_mode": boolean,
-    "vehicle_name": string
+    "vehicle_name": string,
   }
 
-}
+};
 
-export type StreamItem = {
-  time: Date
-  speed: number
-  odometer: number
-  soc: number
-  elevation: number
-  lat: number
-  lng: number
-  power: number
-  shiftState: 'R'|'D'|'N'|'P'
-  range: number
-  estRange: number
-  heading: number
-  estHeading: number
+// tslint:disable-next-line:interface-name
+export interface StreamItem {
+  time: Date;
+  speed: number;
+  odometer: number;
+  soc: number;
+  elevation: number;
+  lat: number;
+  lng: number;
+  power: number;
+  shiftState: "R"|"D"|"N"|"P";
+  range: number;
+  estRange: number;
+  heading: number;
+  estHeading: number;
 }
