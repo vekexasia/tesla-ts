@@ -10,23 +10,32 @@ import { VehicleAPI } from "./vehicleAPI";
  */
 export class TeslaAPI implements ITeslaApiRequestor {
 
+  /**
+   * Use this to get the token or the current set username and password.
+   */
   public get credentials() {
-    return { username: this.username, password: this.password };
+    return { username: this.username, password: this.password, token: this.token };
   }
 
   private token: string;
   private username: string;
   private password: string;
 
-  public constructor(username: string, password?: string) {
+  public constructor(token: string)
+  // tslint:disable-next-line:unified-signatures
+  public constructor(username: string, password: string)
+  public constructor(usernameOrToken: string, password?: string) {
     if (!password) {
-      this.token = username;
+      this.token = usernameOrToken;
     } else {
-      this.username = username;
+      this.username = usernameOrToken;
       this.password = password;
     }
   }
 
+  /**
+   * Lists vehicles.
+   */
   public async vehicles(): Promise<VehicleAPI[]> {
     return this.getRequest<BaseVehicle[]>("/vehicles")
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
