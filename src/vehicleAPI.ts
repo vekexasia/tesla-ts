@@ -18,11 +18,18 @@ export class VehicleAPI {
     return `/vehicles/${this.data.id}`;
   }
 
+  /**
+   * Access the commands (write-requests) for this behicle.
+   */
   public readonly commands: VehicleCommands;
+
   constructor(private apiRequestor: ITeslaApiRequestor, public data: BaseVehicle) {
     this.commands = new VehicleCommands(apiRequestor, data);
   }
 
+  /**
+   * Fetch the Vehicle information from the API
+   */
   public async vehicleData(): Promise<VehicleData> {
     return this.apiRequestor.getRequest(`/vehicles/${this.data.id}/vehicle_data`);
   }
@@ -48,6 +55,10 @@ export class VehicleAPI {
     return this.apiRequestor.getRequest(`/vehicles/${this.data.id}/gui_settings`);
   }
 
+  /**
+   * Creates a Raw Stream and returns a raw WebSocket. No self-reconnect or autohealing is provided by this method
+   * Consider using the .stream method below which returns an Observable.
+   */
   public rawStream(): WebSocket {
     const ws = new WebSocket(STREAM_URL);
     ws.on("open", () => {
@@ -62,6 +73,11 @@ export class VehicleAPI {
     return ws;
   }
 
+  /**
+   * Creates an auto-reconnecting (if provided) stream to the Tesla API.
+   * @param opts
+   * @returns Observable which emits a StreamItem at on every returned data.
+   */
   // tslint:disable-next-line:max-line-length
   public stream(opts: {maxTimeout: number, autoReopen: boolean} = {maxTimeout: 100000, autoReopen: false}): Observable<StreamItem> {
 

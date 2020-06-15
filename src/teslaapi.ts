@@ -6,7 +6,7 @@ import { BaseVehicle } from "./types";
 import { VehicleAPI } from "./vehicleAPI";
 
 /**
- * Main class TeslaAPI Class
+ * Main class TeslaAPI Entry point for this library.
  */
 export class TeslaAPI implements ITeslaApiRequestor {
 
@@ -41,12 +41,25 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
   }
 
+  /**
+   * Create a raw authenticated HTTP.GET request to Tesla.
+   * You can use it if this library misses some API calls.
+   * @param path the endpoint path
+   * @param params the parameters to pass to axios (see axios documentation)
+   */
   public async getRequest<T>(path: string, params?: any) {
     await this.ensureAuth();
     return axios.get<{ response: T }>(`${API_URL}${path}`, { params, headers: this.buildHeaders() })
       .then((r) => r.data.response);
   }
 
+  /**
+   * Creates a raw authenticated HTTP.POST request to Tesla
+   * You can use it if this library misses some API calls.
+   * @param path the endpoint path
+   * @param body the request body
+   * @param params
+   */
   public async postRequest<T>(path: string, body?: any, params?: any) {
     await this.ensureAuth();
     return axios.post<{ response: T }>(`${API_URL}${path}`,
@@ -54,6 +67,9 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((r) => r.data.response);
   }
 
+  /**
+   * Creates authentication headers.
+   */
   private buildHeaders() {
     return {
       "Authorization": `Bearer ${this.token}`,
@@ -61,6 +77,9 @@ export class TeslaAPI implements ITeslaApiRequestor {
     };
   }
 
+  /**
+   * Performs the initial authentication request. when using "username" and "password"
+   */
   private async auth(): Promise<void> {
     const res = await axios
       .post<{ access_token: string, token_type: string, expires_in: number, refresh_token: string }>(
@@ -79,6 +98,9 @@ export class TeslaAPI implements ITeslaApiRequestor {
     this.token = res.data.access_token;
   }
 
+  /**
+   * Ensures that the token has been set.
+   */
   private async ensureAuth() {
     if (!this.token) {
       await this.auth();

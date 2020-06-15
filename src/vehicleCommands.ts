@@ -9,6 +9,10 @@ export class VehicleCommands {
   constructor(private apiRequestor: ITeslaApiRequestor, private vehicle: BaseVehicle) {
   }
 
+  /**
+   * Issues a WakeUp to the vehicle. This is used to initialize communication with the vehicle when the car is
+   * in deep-sleep.
+   */
   public async wakeUp(): Promise<BaseVehicle> {
     return this.apiRequestor.postRequest<BaseVehicle>(`/vehicles/${this.vehicle.id}/wake_up`);
   }
