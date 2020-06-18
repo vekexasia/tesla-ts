@@ -37,11 +37,19 @@ export class VehicleCommands {
       .then((r) => this.mapResponse(r));
   }
 
+  /**
+   * Starts HVAC in auto mode.
+   */
   public async startHVAC(): Promise<true> {
     return this.apiRequestor.getRequest<DefaultCommandResult>(this.commandAPIPath(`auto_conditioning_start`))
       .then((r) => this.mapResponse(r));
   }
 
+  /**
+   * Sets HVAC temperatures (in C°) for both driver and passenger.
+   * @param driverC
+   * @param passengerC
+   */
   public async setTemperature(driverC: number, passengerC: number = driverC): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`set_temps`),
       null,
@@ -101,7 +109,7 @@ export class VehicleCommands {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`charge_stop`))
       .then((r) => this.mapResponse(r));
   }
-  //
+
   public setValetMode(on: boolean, pin: string): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath("set_valet_mode"),
       {
@@ -167,6 +175,7 @@ export class VehicleCommands {
   private commandAPIPath(suffix: string): string {
     return `/vehicles/${this.vehicle.id}/command/${suffix}`;
   }
+
   private async mapResponse(r: DefaultCommandResult): Promise<true> {
     if (!r.result) {
       throw new Error(`Error response: ${JSON.stringify(r)}`);
