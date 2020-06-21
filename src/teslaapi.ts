@@ -41,6 +41,11 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
   }
 
+  public async products(): Promise<any> {
+    return this.getRequest<BaseVehicle[]>("/products");
+      // .then((data) => data.map((item) => new VehicleAPI(this, item)));
+  }
+
   /**
    * Create a raw authenticated HTTP.GET request to Tesla.
    * You can use it if this library misses some API calls.

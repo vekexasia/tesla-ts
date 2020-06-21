@@ -54,7 +54,7 @@ If, at any time, you feel like your password/token was exposed. Make sure to cha
 
 # More infos about the Tesla APIs
 
-The work of this library was made possible thanks to [this great unofficial tesla-api](https://tesla-api.timdorr.com/) website!
+The work of this library was made possible thanks to [this](https://tesla-api.timdorr.com/), and [this](https://www.teslaapi.io/) websites!
 
 # Installation
 
