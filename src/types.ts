@@ -238,3 +238,13 @@ export type PowerwallProduct = {
 };
 
 export type Product = VehicleProduct | PowerwallProduct;
+
+// tslint:disable-next-line:interface-over-type-literal
+export type PowerwallStatus = {
+  site_name: string;
+  id: string;
+  energy_left: number; // Wh
+  total_pack_energy: number; // Wh
+  percentage_charged: number;
+  battery_power: number; // W (- charging, + discharging)
+};

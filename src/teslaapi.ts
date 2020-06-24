@@ -2,8 +2,9 @@ import axios from "axios";
 
 import { ANDROID_USER_AGENT, API_HOST, API_URL, CLIENT_ID, CLIENT_SECRET } from "./apiconstants";
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
-import { BaseVehicle } from "./types";
+import { BaseVehicle, PowerwallProduct, Product } from "./types";
 import { VehicleAPI } from "./vehicleAPI";
+import { PowerwallAPI } from './powerwallAPI';
 
 /**
  * Main class TeslaAPI Entry point for this library.
@@ -41,11 +42,26 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
   }
 
-  public async products(): Promise<any> {
-    return this.getRequest<BaseVehicle[]>("/products");
-      // .then((data) => data.map((item) => new VehicleAPI(this, item)));
+  public async products(): Promise<Array<VehicleAPI|PowerwallAPI>> {
+    return this.getRequest<Product[]>("/products")
+      .then((data) => {
+        const toRet = [];
+        for (const dataEntry of data) {
+          // @ts-ignore
+          if (dataEntry.resource_type === "battery") {
+            toRet.push(new PowerwallAPI(this, dataEntry as PowerwallProduct));
+          } else {
+            toRet.push(new VehicleAPI(this, dataEntry as BaseVehicle));
+          }
+        }
+        return toRet;
+      });
   }
 
+  public async powerwalls(): Promise<PowerwallAPI[]> {
+    const products = await this.products();
+    return products.filter((p) => p instanceof PowerwallAPI) as PowerwallAPI[];
+  }
   /**
    * Create a raw authenticated HTTP.GET request to Tesla.
    * You can use it if this library misses some API calls.
