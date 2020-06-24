@@ -1,16 +1,6 @@
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
-import {
-  BaseVehicle,
-  ClimateState,
-  DriveState,
-  GUISettings,
-  PowerwallProduct,
-  PowerwallStatus,
-  StreamItem,
-  VehicleData
-} from "./types";
-import { VehicleCommands } from "./vehicleCommands";
-import { PowerwallCommands } from './powerwallCommands';
+import { PowerwallCommands } from "./powerwallCommands";
+import { ClimateState, DriveState, PowerwallProduct, PowerwallStatus } from "./types";
 
 export class PowerwallAPI {
 
@@ -33,8 +23,6 @@ export class PowerwallAPI {
   public async backupReservePercentSetting(): Promise<any> {
     return this.apiRequestor.getRequest(`/energy_sites/${this.data.energy_site_id}/site_info`);
   }
-
-
 
   /**
    * Climate settings including seats, vents battery, steering wheel, and preconditioning state.

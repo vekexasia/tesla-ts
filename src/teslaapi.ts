@@ -4,7 +4,7 @@ import { ANDROID_USER_AGENT, API_HOST, API_URL, CLIENT_ID, CLIENT_SECRET } from 
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
 import { BaseVehicle, PowerwallProduct, Product } from "./types";
 import { VehicleAPI } from "./vehicleAPI";
-import { PowerwallAPI } from './powerwallAPI';
+import { PowerwallAPI } from "./powerwallAPI";
 
 /**
  * Main class TeslaAPI Entry point for this library.
@@ -42,7 +42,7 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
   }
 
-  public async products(): Promise<Array<VehicleAPI|PowerwallAPI>> {
+  public async products(): Promise<Array<VehicleAPI | PowerwallAPI>> {
     return this.getRequest<Product[]>("/products")
       .then((data) => {
         const toRet = [];
@@ -62,6 +62,7 @@ export class TeslaAPI implements ITeslaApiRequestor {
     const products = await this.products();
     return products.filter((p) => p instanceof PowerwallAPI) as PowerwallAPI[];
   }
+
   /**
    * Create a raw authenticated HTTP.GET request to Tesla.
    * You can use it if this library misses some API calls.
