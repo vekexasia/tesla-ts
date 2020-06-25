@@ -1,6 +1,6 @@
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
 import { PowerwallCommands } from "./powerwallCommands";
-import { ClimateState, DriveState, PowerwallProduct, PowerwallStatus } from "./types";
+import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "./types";
 
 export class PowerwallAPI {
 
@@ -13,29 +13,12 @@ export class PowerwallAPI {
     this.commands = new PowerwallCommands(apiRequestor, data);
   }
 
-  /**
-   * Fetch the Battery information from the API
-   */
-  public async status(): Promise<PowerwallStatus> {
-    return this.apiRequestor.getRequest(`/powerwalls/${this.data.id}/status`);
-  }
-
-  public async backupReservePercentSetting(): Promise<any> {
+  public async statusInfo(): Promise<PowerwallStatusInfo> {
     return this.apiRequestor.getRequest(`/energy_sites/${this.data.energy_site_id}/site_info`);
   }
 
-  /**
-   * Climate settings including seats, vents battery, steering wheel, and preconditioning state.
-   */
-  public async batteryData(): Promise<ClimateState> {
-    return this.apiRequestor.getRequest(`/vehicles/${this.data.id}`);
-  }
-
-  /**
-   * Drive state including latitude, longitude, and heading of the data.
-   */
-  public async driveState(): Promise<DriveState> {
-    return this.apiRequestor.getRequest(`/vehicles/${this.data.id}/drive_state`);
+  public async liveStatus(): Promise<PowerwallLiveStatus> {
+    return this.apiRequestor.getRequest(`/energy_sites/${this.data.energy_site_id}/live_status`);
   }
 
 }
