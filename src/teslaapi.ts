@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { ANDROID_USER_AGENT, API_HOST, API_URL, CLIENT_ID, CLIENT_SECRET } from "./apiconstants";
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
+import { PowerwallAPI } from "./powerwalls";
 import { BaseVehicle, PowerwallProduct, Product } from "./types";
-import { VehicleAPI } from "./vehicleAPI";
-import { PowerwallAPI } from "./powerwallAPI";
+import { VehicleAPI } from "./vehicles";
 
 /**
  * Main class TeslaAPI Entry point for this library.

@@ -1,5 +1,5 @@
 {
-  "name": "tesla-ts",
+  "name": "teslats",
   "version": "1.0.0",
   "description": "Tesla API library written in TypeScript",
   "main": "dist/index.js",

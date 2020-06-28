@@ -1,5 +1,5 @@
 export * from "./apiconstants";
 export * from "./teslaapi";
-export * from "./vehicleAPI";
+export * from "./vehicles";
+export * from "./powerwalls";
 export * from "./types";
-export * from "./vehicleCommands";

@@ -1,6 +1,6 @@
-import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
+import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
+import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "../types";
 import { PowerwallCommands } from "./powerwallCommands";
-import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "./types";
 
 export class PowerwallAPI {
 
@@ -13,10 +13,16 @@ export class PowerwallAPI {
     this.commands = new PowerwallCommands(apiRequestor, data);
   }
 
+  /**
+   * Current site information status & configuration
+   */
   public async statusInfo(): Promise<PowerwallStatusInfo> {
     return this.apiRequestor.getRequest(`/energy_sites/${this.data.energy_site_id}/site_info`);
   }
 
+  /**
+   * Gets the current live status (power, grid, solar, load)
+   */
   public async liveStatus(): Promise<PowerwallLiveStatus> {
     return this.apiRequestor.getRequest(`/energy_sites/${this.data.energy_site_id}/live_status`);
   }

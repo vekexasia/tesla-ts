@@ -1,5 +1,5 @@
-import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
-import { BaseVehicle } from "./types";
+import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
+import { BaseVehicle } from "../types";
 
 // tslint:disable-next-line:interface-name
 interface DefaultCommandResult { result: boolean; reason: string; }
