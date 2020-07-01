@@ -1,10 +1,9 @@
 import axios from "axios";
 
-import { ANDROID_USER_AGENT, API_HOST, API_URL, CLIENT_ID, CLIENT_SECRET } from "./apiconstants";
+import { ANDROID_USER_AGENT, API_HOST, API_URL, CLIENT_ID, CLIENT_SECRET } from "./constants";
 import { ITeslaApiRequestor } from "./ITeslaApiRequestor";
-import { PowerwallAPI } from "./powerwalls";
-import { BaseVehicle, PowerwallProduct, Product } from "./types";
-import { VehicleAPI } from "./vehicles";
+import { PowerwallAPI, PowerwallProduct } from "./powerwalls";
+import { BaseVehicle, VehicleAPI, VehicleProduct } from "./vehicles";
 
 /**
  * Main class TeslaAPI Entry point for this library.
@@ -43,7 +42,7 @@ export class TeslaAPI implements ITeslaApiRequestor {
   }
 
   public async products(): Promise<Array<VehicleAPI | PowerwallAPI>> {
-    return this.getRequest<Product[]>("/products")
+    return this.getRequest<Array<VehicleProduct | PowerwallProduct>>("/products")
       .then((data) => {
         const toRet = [];
         for (const dataEntry of data) {

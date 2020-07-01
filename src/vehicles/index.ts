@@ -1,2 +1,3 @@
-export * from "./vehicleAPI";
-export * from "./vehicleCommands";
+export * from "./api";
+export * from "./commands";
+export * from "./types";

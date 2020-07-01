@@ -1,6 +1,6 @@
 import assert from "assert";
 import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
-import { PowerwallProduct } from "../types";
+import { PowerwallProduct } from "./types";
 
 // tslint:disable-next-line:interface-name
 interface DefaultCommandResult {

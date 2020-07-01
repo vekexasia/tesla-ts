@@ -1,10 +1,10 @@
 import { concat, EMPTY, Observable, of, Subject, throwError } from "rxjs";
 import { catchError, debounceTime, flatMap, take, tap } from "rxjs/operators";
 import * as WebSocket from "ws";
-import { STREAM_URL } from "../apiconstants";
+import { STREAM_URL } from "../constants";
 import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
-import { BaseVehicle, ClimateState, DriveState, GUISettings, StreamItem, VehicleData } from "../types";
-import { VehicleCommands } from "./vehicleCommands";
+import { VehicleCommands } from "./commands";
+import { BaseVehicle, ClimateState, DriveState, GUISettings, StreamItem, VehicleData } from "./types";
 
 export class VehicleAPI {
   /**

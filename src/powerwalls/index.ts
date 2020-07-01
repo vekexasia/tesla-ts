@@ -1,2 +1,3 @@
-export * from "./powerwallAPI";
-export * from "./powerwallCommands";
+export * from "./api";
+export * from "./commands";
+export * from "./types";

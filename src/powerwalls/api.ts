@@ -1,6 +1,6 @@
 import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
-import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "../types";
-import { PowerwallCommands } from "./powerwallCommands";
+import { PowerwallCommands } from "./commands";
+import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "./types";
 
 export class PowerwallAPI {
 
