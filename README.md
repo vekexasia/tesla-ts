@@ -1,16 +1,16 @@
 # TeslaTS
 [![Version](http://img.shields.io/npm/v/teslats.png)](https://www.npmjs.org/package/teslats)
 [![License](https://img.shields.io/npm/l/teslats.svg)](https://github.com/vekexasia/tesla-ts/blob/master/LICENSE)
-[![Dependencies](https://david-dm.org/mseminatore/TeslaJS.svg)](https://david-dm.org/vekexasia/tesla-ts)
+[![Dependencies](https://david-dm.org/vekexasia/tesla-ts.svg)](https://david-dm.org/vekexasia/tesla-ts)
 
 ## Unofficial NodeJS library with Type definitions in TypeScript that wraps the unofficial Tesla APIs.
 
 ### Other good projects
 
 If you dont one or more then the followings:
-    - Promises
-    - TypeScript definitions
-    - Rx.js/like streams from tesla.
+ * Promises
+ * TypeScript definitions
+ * Rx.js/like streams from tesla.
 
 There is a very good and documented project written in javascript that tackles the tesla api very well. You can find it [here](https://github.com/mseminatore/TeslaJS#readme)
 
