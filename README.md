@@ -41,7 +41,7 @@ Contributions are welcome, particularly bug fixes and enhancements!
 > Please note that Project owners reserve the right to accept or reject any PR
 > for any reason.
 
-## Disclaymer
+## Disclaimer
 
 The project owner makes no warranties about the completeness, reliability and accuracy of its code.
 Using this library might be against the ToS of Tesla and you are the only responsible when dealing with sensitive data
