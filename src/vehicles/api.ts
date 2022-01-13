@@ -52,10 +52,9 @@ export class VehicleAPI {
     const ws = new WebSocket(STREAM_URL);
     ws.on("open", () => {
       ws.send(Buffer.from(JSON.stringify({
-        msg_type: "data:subscribe",
+        msg_type: "data:subscribe_oauth",
         tag     : `${this.data.vehicle_id}`,
-        token   : Buffer
-          .from(`${this.apiRequestor.credentials.username}:${this.data.tokens[0]}`, "utf8").toString("base64"),
+        token   : this.apiRequestor.token,
         value   : "speed,odometer,soc,elevation,est_heading,est_lat,est_lng,power,shift_state,range,est_range,heading",
       })));
     });

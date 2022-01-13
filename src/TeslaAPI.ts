@@ -10,27 +10,8 @@ import { BaseVehicle, VehicleAPI, VehicleProduct } from "./vehicles";
  */
 export class TeslaAPI implements ITeslaApiRequestor {
 
-  /**
-   * Use this to get the token or the current set username and password.
-   */
-  public get credentials() {
-    return { username: this.username, password: this.password, token: this.token };
-  }
-
-  private token: string;
-  private username: string;
-  private password: string;
-
-  public constructor(token: string)
-  // tslint:disable-next-line:unified-signatures
-  public constructor(username: string, password: string)
-  public constructor(usernameOrToken: string, password?: string) {
-    if (!password) {
-      this.token = usernameOrToken;
-    } else {
-      this.username = usernameOrToken;
-      this.password = password;
-    }
+  public constructor(public readonly token: string) {
+      this.token = token;
   }
 
   /**
@@ -69,7 +50,6 @@ export class TeslaAPI implements ITeslaApiRequestor {
    * @param params the parameters to pass to axios (see axios documentation)
    */
   public async getRequest<T>(path: string, params?: any) {
-    await this.ensureAuth();
     return axios.get<{ response: T }>(`${API_URL}${path}`, { params, headers: this.buildHeaders() })
       .then((r) => r.data.response);
   }
@@ -82,7 +62,6 @@ export class TeslaAPI implements ITeslaApiRequestor {
    * @param params
    */
   public async postRequest<T>(path: string, body?: any, params?: any) {
-    await this.ensureAuth();
     return axios.post<{ response: T }>(`${API_URL}${path}`,
       body || {}, { params: params || {}, headers: this.buildHeaders() })
       .then((r) => r.data.response);
@@ -97,35 +76,4 @@ export class TeslaAPI implements ITeslaApiRequestor {
       "User-Agent"   : ANDROID_USER_AGENT,
     };
   }
-
-  /**
-   * Performs the initial authentication request. when using "username" and "password"
-   */
-  private async auth(): Promise<void> {
-    const res = await axios
-      .post<{ access_token: string, token_type: string, expires_in: number, refresh_token: string }>(
-        `${API_HOST}/oauth/token`,
-        {
-          client_id    : CLIENT_ID,
-          client_secret: CLIENT_SECRET,
-          email        : this.username,
-          grant_type   : "password",
-          password     : this.password,
-        },
-      );
-    if (res.status !== 200) {
-      throw new Error(`Authorization failure: ${res.data}`);
-    }
-    this.token = res.data.access_token;
-  }
-
-  /**
-   * Ensures that the token has been set.
-   */
-  private async ensureAuth() {
-    if (!this.token) {
-      await this.auth();
-    }
-  }
-
 }
