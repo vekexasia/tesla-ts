@@ -1,11 +1,12 @@
 {
-  "name": "tesla-ts",
+  "name": "ts-tesla",
   "version": "1.0.4",
   "description": "Tesla API library written in TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Matan Mashraki",
   "license": "MIT",
+  "repository": "github:planecore/tesla-ts",
   "scripts": {
     "build": "tslint -p . && tsc --outDir dist --target es5 -d"
   },
