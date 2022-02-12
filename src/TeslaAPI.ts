@@ -9,33 +9,32 @@ import { BaseVehicle, VehicleAPI, VehicleProduct } from "./vehicles";
  * Main class TeslaAPI Entry point for this library.
  */
 export class TeslaAPI implements ITeslaApiRequestor {
-
   public constructor(public readonly token: string) {
-      this.token = token;
+    this.token = token;
   }
 
   /**
    * Lists vehicles.
    */
   public async vehicles(): Promise<VehicleAPI[]> {
-    return this.getRequest<BaseVehicle[]>("/vehicles")
-      .then((data) => data.map((item) => new VehicleAPI(this, item)));
+    return this.getRequest<BaseVehicle[]>("/vehicles").then((data) =>
+      data.map((item) => new VehicleAPI(this, item))
+    );
   }
 
   public async products(): Promise<Array<VehicleAPI | PowerwallAPI>> {
-    return this.getRequest<Array<VehicleProduct | PowerwallProduct>>("/products")
-      .then((data) => {
-        const toRet = [];
-        for (const dataEntry of data) {
-          // @ts-ignore
-          if (dataEntry.resource_type === "battery") {
-            toRet.push(new PowerwallAPI(this, dataEntry as PowerwallProduct));
-          } else {
-            toRet.push(new VehicleAPI(this, dataEntry as BaseVehicle));
-          }
+    return this.getRequest<Array<VehicleProduct | PowerwallProduct>>("/products").then((data) => {
+      const toRet = [];
+      for (const dataEntry of data) {
+        // @ts-ignore
+        if (dataEntry.resource_type === "battery") {
+          toRet.push(new PowerwallAPI(this, dataEntry as PowerwallProduct));
+        } else {
+          toRet.push(new VehicleAPI(this, dataEntry as BaseVehicle));
         }
-        return toRet;
-      });
+      }
+      return toRet;
+    });
   }
 
   public async powerwalls(): Promise<PowerwallAPI[]> {
@@ -50,7 +49,8 @@ export class TeslaAPI implements ITeslaApiRequestor {
    * @param params the parameters to pass to axios (see axios documentation)
    */
   public async getRequest<T>(path: string, params?: any) {
-    return axios.get<{ response: T }>(`${API_URL}${path}`, { params, headers: this.buildHeaders() })
+    return axios
+      .get<{ response: T }>(`${API_URL}${path}`, { params, headers: this.buildHeaders() })
       .then((r) => r.data.response);
   }
 
@@ -62,8 +62,11 @@ export class TeslaAPI implements ITeslaApiRequestor {
    * @param params
    */
   public async postRequest<T>(path: string, body?: any, params?: any) {
-    return axios.post<{ response: T }>(`${API_URL}${path}`,
-      body || {}, { params: params || {}, headers: this.buildHeaders() })
+    return axios
+      .post<{ response: T }>(`${API_URL}${path}`, body || {}, {
+        params: params || {},
+        headers: this.buildHeaders(),
+      })
       .then((r) => r.data.response);
   }
 
@@ -72,8 +75,8 @@ export class TeslaAPI implements ITeslaApiRequestor {
    */
   private buildHeaders() {
     return {
-      "Authorization": `Bearer ${this.token}`,
-      "User-Agent"   : ANDROID_USER_AGENT,
+      Authorization: `Bearer ${this.token}`,
+      "User-Agent": ANDROID_USER_AGENT,
     };
   }
 }

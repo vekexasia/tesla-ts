@@ -9,9 +9,7 @@ interface DefaultCommandResult {
 }
 
 export class PowerwallCommands {
-
-  constructor(private apiRequestor: ITeslaApiRequestor, private powerwall: PowerwallProduct) {
-  }
+  constructor(private apiRequestor: ITeslaApiRequestor, private powerwall: PowerwallProduct) {}
 
   public setBackupReservePercent(percent: number) {
     assert(percent >= 0);
@@ -29,10 +27,12 @@ export class PowerwallCommands {
    *  - backup: only power outages will drain power from battery
    *  - autonomous: what is marked as Advanced in the Tesla App (with time based control)
    */
-  public setOperatingMode(mode: "self_consumption"|"backup"|"autonomous") {
-    return this.apiRequestor.postRequest(`/energy_sites/${this.powerwall.energy_site_id}/operation`, {
-      default_real_mode: mode,
-    });
+  public setOperatingMode(mode: "self_consumption" | "backup" | "autonomous") {
+    return this.apiRequestor.postRequest(
+      `/energy_sites/${this.powerwall.energy_site_id}/operation`,
+      {
+        default_real_mode: mode,
+      }
+    );
   }
-
 }

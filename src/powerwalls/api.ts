@@ -3,7 +3,6 @@ import { PowerwallCommands } from "./commands";
 import { PowerwallLiveStatus, PowerwallProduct, PowerwallStatusInfo } from "./types";
 
 export class PowerwallAPI {
-
   /**
    * Access the commands (write-requests) for this behicle.
    */

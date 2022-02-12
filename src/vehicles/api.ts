@@ -4,7 +4,14 @@ import * as WebSocket from "ws";
 import { STREAM_URL } from "../constants";
 import { ITeslaApiRequestor } from "../ITeslaApiRequestor";
 import { VehicleCommands } from "./commands";
-import { BaseVehicle, ClimateState, DriveState, GUISettings, StreamItem, VehicleData } from "./types";
+import {
+  BaseVehicle,
+  ClimateState,
+  DriveState,
+  GUISettings,
+  StreamItem,
+  VehicleData,
+} from "./types";
 
 export class VehicleAPI {
   /**
@@ -51,12 +58,17 @@ export class VehicleAPI {
   public rawStream(): WebSocket {
     const ws = new WebSocket(STREAM_URL);
     ws.on("open", () => {
-      ws.send(Buffer.from(JSON.stringify({
-        msg_type: "data:subscribe_oauth",
-        tag     : `${this.data.vehicle_id}`,
-        token   : this.apiRequestor.token,
-        value   : "speed,odometer,soc,elevation,est_heading,est_lat,est_lng,power,shift_state,range,est_range,heading",
-      })));
+      ws.send(
+        Buffer.from(
+          JSON.stringify({
+            msg_type: "data:subscribe_oauth",
+            tag: `${this.data.vehicle_id}`,
+            token: this.apiRequestor.token,
+            value:
+              "speed,odometer,soc,elevation,est_heading,est_lat,est_lng,power,shift_state,range,est_range,heading",
+          })
+        )
+      );
     });
     return ws;
   }
@@ -67,37 +79,41 @@ export class VehicleAPI {
    * @returns Observable which emits a StreamItem at on every returned data.
    */
   // tslint:disable-next-line:max-line-length
-  public stream(opts: { maxTimeout: number, autoReopen: boolean } = {
-    autoReopen: false,
-    maxTimeout: 100000,
-  }): Observable<StreamItem> {
-
+  public stream(
+    opts: { maxTimeout: number; autoReopen: boolean } = {
+      autoReopen: false,
+      maxTimeout: 100000,
+    }
+  ): Observable<StreamItem> {
     const reconnectSubject = new Subject<void>();
-    const autoReopenFN     = () => {
+    const autoReopenFN = () => {
       if (opts.autoReopen) {
         reconnectSubject.next();
       } else {
         reconnectSubject.complete();
       }
     };
-    return concat(
-      of(1),
-      reconnectSubject,
-    )
-      .pipe(flatMap(() => this.initializeStream(opts.maxTimeout)
-        .pipe(tap({
-          complete: autoReopenFN,
-        }))
-        .pipe(catchError((a) => {
-          autoReopenFN();
-          return opts.autoReopen ? EMPTY : throwError(a);
-        })),
-      ));
+    return concat(of(1), reconnectSubject).pipe(
+      flatMap(() =>
+        this.initializeStream(opts.maxTimeout)
+          .pipe(
+            tap({
+              complete: autoReopenFN,
+            })
+          )
+          .pipe(
+            catchError((a) => {
+              autoReopenFN();
+              return opts.autoReopen ? EMPTY : throwError(a);
+            })
+          )
+      )
+    );
   }
 
   private initializeStream(timeout: number): Observable<StreamItem> {
     return new Observable((observer) => {
-      const ws          = this.rawStream();
+      const ws = this.rawStream();
       const timeoutSubj = new Subject();
       timeoutSubj.pipe(debounceTime(timeout), take(1)).subscribe(() => ws.terminate());
 
@@ -110,21 +126,35 @@ export class VehicleAPI {
         timeoutSubj.next();
         if (jO.msg_type === "data:update") {
           // tslint:disable-next-line:max-line-length
-          const [timestamp, speed, odometer, soc, elevation, estHeading, lat, lng, power, shiftState, range, estRange, heading] = jO.value.split(",");
-          observer.next({
-            elevation : parseFloat(elevation),
-            estHeading: parseFloat(estHeading),
-            estRange  : parseFloat(estRange),
-            heading   : parseFloat(heading),
-            lat       : parseFloat(lat),
-            lng       : parseFloat(lng),
-            odometer  : parseFloat(odometer),
-            power     : parseFloat(power),
-            range     : parseFloat(range),
+          const [
+            timestamp,
+            speed,
+            odometer,
+            soc,
+            elevation,
+            estHeading,
+            lat,
+            lng,
+            power,
             shiftState,
-            soc       : parseFloat(soc),
-            speed     : speed === "" ? null : parseFloat(speed),
-            time      : new Date(parseInt(timestamp, 10)),
+            range,
+            estRange,
+            heading,
+          ] = jO.value.split(",");
+          observer.next({
+            elevation: parseFloat(elevation),
+            estHeading: parseFloat(estHeading),
+            estRange: parseFloat(estRange),
+            heading: parseFloat(heading),
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            odometer: parseFloat(odometer),
+            power: parseFloat(power),
+            range: parseFloat(range),
+            shiftState,
+            soc: parseFloat(soc),
+            speed: speed === "" ? null : parseFloat(speed),
+            time: new Date(parseInt(timestamp, 10)),
           });
         } else {
           const r = JSON.parse(data.toString());
@@ -135,8 +165,6 @@ export class VehicleAPI {
           }
         }
       });
-
     });
   }
-
 }
