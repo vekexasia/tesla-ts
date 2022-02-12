@@ -1,10 +1,10 @@
 {
-  "name": "teslats",
-  "version": "1.0.3",
+  "name": "tesla-ts",
+  "version": "1.0.4",
   "description": "Tesla API library written in TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "author": "Andrea Baccega",
+  "author": "Matan Mashraki",
   "license": "MIT",
   "scripts": {
     "build": "tslint -p . && tsc --outDir dist --target es5 -d"
