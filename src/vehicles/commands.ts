@@ -166,7 +166,7 @@ export class VehicleCommands {
   }
 
   public sentry(set: boolean): Promise<true> {
-    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`window_control`),
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`set_sentry_mode`),
       {},
       { on: set })
       .then((r) => this.mapResponse(r));
