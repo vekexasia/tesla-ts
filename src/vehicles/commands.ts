@@ -159,16 +159,15 @@ export class VehicleCommands {
 
   public setWindows(cmd: "vent"|"close"): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`window_control`),
-      {},
-      { lat: 0, lon: 0, command: cmd },
+      { lat: 0, lon: 0, command: cmd }
     )
       .then((r) => this.mapResponse(r));
   }
 
   public sentry(set: boolean): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`set_sentry_mode`),
-      {},
-      { on: set })
+      { on: set }
+    )
       .then((r) => this.mapResponse(r));
   }
 
