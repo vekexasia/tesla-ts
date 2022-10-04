@@ -51,12 +51,12 @@ export type PowerwallStatusInfo = {
   battery_count: number;
   tou_settings: {
     optimization_strategy: "economics"|string;
-    schedule: Array<{
+    schedule: {
       target: "off_peak" | "peak";
       week_days: number[],
       start_seconds: number;
       end_seconds: number;
-    }>
+    }[]
   },
   nameplate_power: number;
   nameplate_energy: number;
