@@ -18,7 +18,7 @@ export class VehicleCommands {
   }
 
   public async unlockDoors(): Promise<true> {
-    return this.apiRequestor.getRequest<DefaultCommandResult>(this.commandAPIPath(`door_unlock`))
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`door_unlock`))
       .then((r) => this.mapResponse(r));
   }
 
@@ -28,7 +28,7 @@ export class VehicleCommands {
   }
 
   public async honkHorn(): Promise<true> {
-    return this.apiRequestor.getRequest<DefaultCommandResult>(this.commandAPIPath(`honk_horn`))
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`honk_horn`))
       .then((r) => this.mapResponse(r));
   }
 
@@ -41,7 +41,7 @@ export class VehicleCommands {
    * Starts HVAC in auto mode.
    */
   public async startHVAC(): Promise<true> {
-    return this.apiRequestor.getRequest<DefaultCommandResult>(this.commandAPIPath(`auto_conditioning_start`))
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`auto_conditioning_start`))
       .then((r) => this.mapResponse(r));
   }
 
@@ -52,7 +52,6 @@ export class VehicleCommands {
    */
   public async setTemperature(driverC: number, passengerC: number = driverC): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`set_temps`),
-      null,
       {
         driver_temp: driverC,
         passenger_temp: passengerC,
@@ -62,7 +61,6 @@ export class VehicleCommands {
 
   public async setChargeLimit(percent: number): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`set_charge_limit`),
-      null,
       { percent })
       .then((r) => this.mapResponse(r));
   }
@@ -79,15 +77,12 @@ export class VehicleCommands {
 
   public async actuateTrunk(which: "rear"|"front"): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`actuate_trunk`),
-      { which_trunk: which },
-      )
+      { which_trunk: which })
       .then((r) => this.mapResponse(r));
   }
 
-  public async remoteDrive(password: string): Promise<true> {
-    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`remote_start_drive`),
-      null,
-      { password })
+  public async remoteDrive(): Promise<true> {
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`remote_start_drive`))
       .then((r) => this.mapResponse(r));
   }
 
@@ -136,14 +131,12 @@ export class VehicleCommands {
   }
   public speedLimitSet(limitMPH: number): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`speed_limit_set_limit`),
-      {},
       { limit_mph: limitMPH},
       )
       .then((r) => this.mapResponse(r));
   }
   public speedLimitClearPIN(pin: number): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`speed_limit_clear_pin`),
-      {},
       { pin },
       )
       .then((r) => this.mapResponse(r));
@@ -151,7 +144,6 @@ export class VehicleCommands {
 
   public homeLinkTrigger(lat: number, lon: number): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`trigger_homelink`),
-      {},
       { lat, lon },
     )
       .then((r) => this.mapResponse(r));
@@ -159,7 +151,6 @@ export class VehicleCommands {
 
   public setWindows(cmd: "vent"|"close"): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`window_control`),
-      {},
       { lat: 0, lon: 0, command: cmd },
     )
       .then((r) => this.mapResponse(r));
@@ -167,7 +158,6 @@ export class VehicleCommands {
 
   public sentry(set: boolean): Promise<true> {
     return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`window_control`),
-      {},
       { on: set })
       .then((r) => this.mapResponse(r));
   }
