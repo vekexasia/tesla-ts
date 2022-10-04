@@ -101,13 +101,13 @@ export class VehicleAPI {
       const timeoutSubj = new Subject();
       timeoutSubj.pipe(debounceTime(timeout), take(1)).subscribe(() => ws.terminate());
 
-      ws.on("open", () => timeoutSubj.next());
+      ws.on("open", () => timeoutSubj.next(null));
       ws.on("close", () => observer.complete());
       ws.on("error", (e) => observer.error(e));
 
       ws.on("message", (data) => {
         const jO = JSON.parse(data.toString());
-        timeoutSubj.next();
+        timeoutSubj.next(null);
         if (jO.msg_type === "data:update") {
           // tslint:disable-next-line:max-line-length
           const [timestamp, speed, odometer, soc, elevation, estHeading, lat, lng, power, shiftState, range, estRange, heading] = jO.value.split(",");

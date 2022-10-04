@@ -22,8 +22,8 @@ export class TeslaAPI implements ITeslaApiRequestor {
       .then((data) => data.map((item) => new VehicleAPI(this, item)));
   }
 
-  public async products(): Promise<Array<VehicleAPI | PowerwallAPI>> {
-    return this.getRequest<Array<VehicleProduct | PowerwallProduct>>("/products")
+  public async products(): Promise<(VehicleAPI | PowerwallAPI)[]> {
+    return this.getRequest<(VehicleProduct | PowerwallProduct)[]>("/products")
       .then((data) => {
         const toRet = [];
         for (const dataEntry of data) {
