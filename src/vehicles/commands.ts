@@ -45,6 +45,11 @@ export class VehicleCommands {
       .then((r) => this.mapResponse(r));
   }
 
+  public async stopHVAC(): Promise<true> {
+    return this.apiRequestor.postRequest<DefaultCommandResult>(this.commandAPIPath(`auto_conditioning_stop`))
+      .then((r) => this.mapResponse(r));
+  }
+
   /**
    * Sets HVAC temperatures (in C°) for both driver and passenger.
    * @param driverC
